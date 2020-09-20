@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <meta charset="utf-8" , content="width=device-width" , initial-scale="1">
+    <title>계산기</title>
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 20%;
+            height: 10%;
+            margin: 1px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border: none;
+            border-right: 0px;
+            border-top: 0px;
+            border-left: 0px;
+            border-bottom: 0px;
+            background-color: rgb(242, 242, 242);
+        }
+
+        #display_value {
+            width: 80%;
+            height: 5%;
+            margin: 2px;
+            font-size: 20px;
+            text-align: right;
+        }
+
+        #final_value {
+            width: 80%;
+            height: 10%;
+            margin: 3px;
+            font-size: 50px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        #window {
+            width: 100%;
+            height: 100%;
+            margin: 3px;
+            background-color:rgb(232, 232, 232);
+        }
+
+        .hidden_window {
+            width: 15%;
+            height: 5%;
+            margin: 5px;
+            font-size: px;
+            visibility: hidden;
+        }
+
+        input {
+            border: none;
+            border-right: 0px;
+            border-top: 0px;
+            border-left: 0px;
+            border-bottom: 0px;
+            background-color:rgb(232, 232, 232);
+        }
+        .main_button{
+            background-color:rgb(251, 251, 251);
+        }
+        #calc_button{
+            background-color:rgb(142, 190, 228)
+        }
+    </style>
+</header>
+
+<body>
+
+    <div id="window">
+        <div id="upper_screen">
+             표준
+        </div>
+        <div>
+            <input type="text" id="display_value" value="0">
+        </div>
+        <div>
+            <input type="text" id="final_value" value="0">
+        </div>
+        <div>
+            <input type="text" class="hidden_window" id="first_value" value="0">
+            <input type="text" class="hidden_window" id="second_value" value="0">
+            <input type="text" class="hidden_window" id="index_value" value="0">
+            <input type="text" class="hidden_window" id="prev_value" value="0">
+        </div>
+        <div>
+            <button onclick="calc_btn('CE')">CE</button>
+            <button onclick="calc_btn('C')">C</button>
+            <button onclick="calc_btn('X')">X</button>
+            <button onclick="calc_btn('/')">/</button>
+        </div>
+        <div>
+            <button onclick="number_btn(7)" class="main_button">7</button>
+            <button onclick="number_btn(8)" class="main_button">8</button>
+            <button onclick="number_btn(9)" class="main_button">9</button>
+            <button onclick="calc_btn('*')">X</button>
+        </div>
+        <div>
+            <button onclick="number_btn(4)" class="main_button">4</button>
+            <button onclick="number_btn(5)" class="main_button">5</button>
+            <button onclick="number_btn(6)" class="main_button">6</button>
+            <button onclick="calc_btn('-')">-</button>
+        </div>
+
+        <div>
+            <button onclick="number_btn(1)" class="main_button">1</button>
+            <button onclick="number_btn(2)" class="main_button">2</button>
+            <button onclick="number_btn(3)" class="main_button">3</button>
+            <button onclick="calc_btn('+')">+</button>
+        </div>
+        <div>
+            <button onclick="calc_btn('change_pm')" class="main_button">+/-</button>
+            <button onclick="number_btn(0)" class="main_button">0</button>
+            <button onclick="calc_btn('.')" class="main_button">.</button>
+            <button onclick="calc_btn('=')" id="calc_button">=</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    function number_btn(n) {
+        var display_value = document.getElementById("display_value"); // 폼 선택
+        var first_value = document.getElementById("first_value"); // 폼 선택
+        var second_value = document.getElementById("second_value"); // 폼 선택
+        var index_value = document.getElementById("index_value"); // 폼 선택
+        var final_value = document.getElementById("final_value"); // 폼 선택
+        console.log(display_value)
+        if (display_value.value == '0') {
+            display_value.value = String(n);
+        }
+        else {
+            display_value.value = display_value.value + String(n);
+        }
+        if (index_value.value == 0) {
+            if (first_value.value == '0') {
+                first_value.value = String(n);
+            }
+            else {
+                first_value.value = first_value.value + String(n);
+            }
+            final_value.value=first_value.value;
+        }
+        else {
+            index_value.value = 2;
+            if (second_value.value == '0') {
+                second_value.value = String(n);
+            }
+            else {
+                second_value.value = second_value.value + String(n);
+            }
+            final_value.value=second_value.value;
+        }
+        console.log(display_value)
+    }
+    function press(f){ 
+        var display_value = document.getElementById("display_value"); // 폼 선택
+        var final_value = document.getElementById("final_value"); // 폼 선택
+        var first_value = document.getElementById("first_value"); // 폼 선택
+        var second_value = document.getElementById("second_value"); // 폼 선택
+        var index_value = document.getElementById("index_value"); // 폼 선택
+        var prev_value = document.getElementById("prev_value"); // 폼 선택
+
+        if(f.keyCode == 13)
+        {
+            final_value.value = final_value.value;
+            display_value.value = final_value.value;
+            first_value.value = final_value.value;
+        }
+    }
+    function calc_btn(n) {
+        var display_value = document.getElementById("display_value"); // 폼 선택
+        var final_value = document.getElementById("final_value"); // 폼 선택
+        var first_value = document.getElementById("first_value"); // 폼 선택
+        var second_value = document.getElementById("second_value"); // 폼 선택
+        var index_value = document.getElementById("index_value"); // 폼 선택
+        var prev_value = document.getElementById("prev_value"); // 폼 선택
+
+        console.log(display_value)
+        if (n == '.') {
+            if (index_value.value == 0) {
+                if (first_value.value.indexOf('.') == -1) {
+                    first_value.value = first_value.value + String(n);
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                if (second_value.value.indexOf('.') == -1) {
+                    second_value.value = second_value.value + String(n);
+                }
+                else {
+                    return;
+                }
+            }
+
+            display_value.value = display_value.value + String(n);
+        }
+        else if (n == 'change_pm') {
+            var temp;
+            if (index_value.value == 0) {
+                temp=first_value.value;
+            }
+            else{
+                temp=second_value.value
+            }
+            if (temp.indexOf('+') == -1 && temp.indexOf('-') == -1 ) {
+                temp='-'+temp;
+            }
+            else if(temp.indexOf('-') != -1)
+            {
+                temp='-'+temp;
+                temp = temp.replace('--', '+');
+            }
+            else if(temp.indexOf('+') != -1)
+            {
+                temp = temp.replace('+', '');
+                temp='-'+temp;
+            }
+            if (index_value.value == 0) {
+                first_value.value=temp;
+            }
+            else{
+                second_value.value=temp;
+            }
+            if (index_value.value != 0)
+            {
+                display_value.value =first_value.value+prev_value.value+second_value.value;
+            }
+            else
+            {
+                display_value.value =first_value.value;    
+            }
+        }
+        else if (n == 'C' || n == 'CE') {
+            index_value.value = 0;
+            prev_value.value = '0';
+            final_value.value = 0;
+            display_value.value = 0;
+            first_value.value = 0;
+            second_value.value = 0;
+        }
+        else if (n == 'X') {
+            console.log("remove value" + display_value.value.slice(0, 1));
+
+            if (parseInt(display_value.value.charAt(display_value.value.length - 1)) >= 0 && parseInt(display_value.value.charAt(display_value.value.length - 1)) <= 9) {
+                if (index_value.value == 0) {
+                    first_value.value = first_value.value.slice(0, -1);
+                }
+                else {
+                    second_value.value = second_value.value.slice(0, -1);
+                }
+            }
+            else {
+                index_value.value = 0;
+                prev_value.value = '0';
+            }
+            display_value.value = display_value.value.slice(0, -1);
+        }
+        else {
+            if(display_value.value.indexOf('=') != -1)
+            {
+                display_value.value=first_value.value;
+            }
+            display_value.value = display_value.value + String(n);
+
+            if (prev_value.value == '0') {
+                index_value.value = 1;
+                prev_value.value = String(n);
+            }
+            else {
+                if (index_value.value == 1) {
+                    prev_value.value = String(n);
+                    display_value.value = display_value.value.slice(0, -2) + String(n);
+                    return;
+                }
+                if (prev_value.value == '+') {
+                    first_value.value = parseFloat(first_value.value) + parseFloat(second_value.value);
+                }
+                else if (prev_value.value == '-') {
+                    first_value.value = parseFloat(first_value.value) - parseFloat(second_value.value);
+                }
+                else if (prev_value.value == '*') {
+                    first_value.value = parseFloat(first_value.value) * parseFloat(second_value.value);
+                }
+                else if (prev_value.value == '/') {
+                    first_value.value = parseFloat(first_value.value) / parseFloat(second_value.value);
+                }
+                second_value.value = 0;
+                if (n == '=') {
+                    prev_value.value = '0';
+                    final_value.value = first_value.value;
+                }
+                else {
+                    prev_value.value = String(n);
+                    final_value.value = first_value.value;
+                }
+            }
+
+        }
+
+        console.log(display_value)
+    }
+
+</script>
+
+
+</html>
